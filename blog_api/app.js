@@ -32,9 +32,11 @@ app.use('/users', usersRouter);
 
 // 接口
 
-
 var apiUser = require("./api/back/user.js")
 app.use('/api/back/user', apiUser);
+
+var apiAddList = require("./api/back/list.js")
+app.use('/api/back/addlist', apiAddList);
 
 
 // catch 404 and forward to error handler

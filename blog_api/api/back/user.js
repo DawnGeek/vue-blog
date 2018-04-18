@@ -9,19 +9,6 @@ var {
   query //基本操作
 } = require("../../config/db_connect");
 
-
-/* GET home page. */
-
-router.get('/', function(req, res, next) {
-  var sql = `select * from user`;
-  readHandle(sql).then((data) => {
-    res.send({
-      code: 200,
-      data: data
-    });
-  })
-});
-
 router.post('/login', function(req, res, next) {
   let arg = req.body;
   if (hasOwnProperty(arg, 'username') && hasOwnProperty(arg, 'password')) {
@@ -31,8 +18,7 @@ router.post('/login', function(req, res, next) {
     } = arg;
     const userSql = `select * from user where username='${username}'`;
     readHandle(userSql).then(data => {
-      console.log(data)
-      if (data.length < 0) {
+      if (data.length === 0) {
         res.send({
           code: '1001',
           msg: '未该用户名'
@@ -58,6 +44,5 @@ router.post('/login', function(req, res, next) {
     })
   }
 });
-
 
 module.exports = router;

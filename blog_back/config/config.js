@@ -33,7 +33,9 @@ module.exports = {
     assetsSubDirectory: 'static', //静态文件拷贝路径，注意这里使用相对dist文件夹的目录名
     assetsPublicPath: '/',
     souceMap:"cheap-module-eval-source-map",
-    proxyTable: {},
+    proxyTable: {
+      '/api': 'http://localhost:8888/'
+    },
     middleWare:function(app){
         app.get("/api",function(req,res,next){
           res.send("1234")
