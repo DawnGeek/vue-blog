@@ -33,12 +33,14 @@ import LoginHeader from './LoginHeader'
 				username: {
 					value: '',
 					reg:/^[a-zA-Z]{4,12}$/,
-					msg: '您输入的用户名有误！'
+					msg: '您输入的用户名有误！',
+					state: false
 				},
 				password: {
 					value:'',
 					reg:/^[a-zA-Z0-9]{6,12}$/,
-					msg: '您输入的密码有误！'
+					msg: '您输入的密码有误！',
+					state: false
 				}
 			}
 		},
