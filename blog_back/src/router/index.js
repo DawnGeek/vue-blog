@@ -4,6 +4,8 @@ import vueRouter from 'vue-router'
 import Login from '../components/login'
 import Main from '../components/Main'
 import AddOne from '../components/AddOne'
+import AddTwo from '../components/AddTwo'
+import ClassList from '../components/ClassList'
 
 vue.use(vueRouter)
 
@@ -23,6 +25,12 @@ let router = new vueRouter({
 			{
 				path: 'addone',
 				component: AddOne
+			}, {
+				path: 'addtwo',
+				component: AddTwo
+			}, {
+				path: 'classlist',
+				component: ClassList
 			}
 		]
 	}]

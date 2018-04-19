@@ -35,8 +35,8 @@ app.use('/users', usersRouter);
 var apiUser = require("./api/back/user.js")
 app.use('/api/back/user', apiUser);
 
-var apiAddList = require("./api/back/list.js")
-app.use('/api/back/addlist', apiAddList);
+var apiClass = require("./api/back/class.js")
+app.use('/api/back/class', apiClass);
 
 
 // catch 404 and forward to error handler

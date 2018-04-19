@@ -9,8 +9,8 @@
       <el-submenu index="2">
        <template slot="title"><i class="el-icon-message"></i>分类操作</template>
        <el-menu-item index="2-1"><router-link to="/main/addone">一级分类添加</router-link></el-menu-item>
-          <el-menu-item index="2-2"><router-link to="/back/add_two_class">二级分类添加</router-link></el-menu-item>
-          <el-menu-item index="2-3"><router-link to="/back/class_list">分类列表</router-link></el-menu-item>
+          <el-menu-item index="2-2"><router-link to="/main/addtwo">二级分类添加</router-link></el-menu-item>
+          <el-menu-item index="2-3"><router-link to="/main/classlist">分类列表</router-link></el-menu-item>
       </el-submenu>
        <el-submenu index="3">
        <template slot="title"><i class="el-icon-message"></i>接口操作</template>
