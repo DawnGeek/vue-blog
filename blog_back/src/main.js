@@ -3,20 +3,21 @@ import Vue from "vue"
 import router from './router'
 import App from './components/app'
 import ElementUI from 'element-ui';
+import axios from 'axios';
+import vueAxios from "vue-axios";
+import './directives';
 
 import "./css/common.css"
-import 'element-ui/lib/theme-chalk/index.css';
-
 
 Vue.use(ElementUI);
-
+Vue.use(vueAxios,axios)
 
 new Vue({
   el:"#root",
-  template:"<App />",
+  template:"<App/>",
   router,
   components: {
-      App: resolve => require(['./components/app.vue'], resolve)
+      App
   },
   render: h => h(App)
 })
