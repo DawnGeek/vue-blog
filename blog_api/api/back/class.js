@@ -58,6 +58,38 @@ router.post('/insertoneclass', function(req, res, next) {
   };
 });
 
+// 添加文章
+router.post("/addarticle", (req, res,next) => {
+  const {
+    name,
+    onename,
+    twoname,
+    disradio,
+    recradio,
+    takeaway,
+    author,
+    date,
+    content
+  } = req.body;
+  let addSql = "INSERT INTO `blog`.`article` SET  `author` = '" + author + "', `name` = '" + name + "', `onename` = '" + onename + "', `twoname` = '" + twoname + "', `takeaway` = '" + takeaway + "', `content` = '" + content + "', `disradio` = '" + disradio + "', `recradio` = '" + recradio + "', `data` = '" + data + "'";
+  console.log(addSql)
+  // async function sqlAllHandle() {
+  //   await sqlHandle(addSql);
+  //   return {
+  //     code: "2011",
+  //     msg: "插入成功"
+  //   }
+  // }
+  // sqlAllHandle().then((data) => {
+  //     res.send(data)
+  //   }).catch((err) => {
+  //     res.send({
+  //       code: "2012",
+  //       msg: "插入失败"
+  //     })
+  //   })
+  res.send('23')
+})
 
 // 二级类名的添加
 router.post("/inserttwoclass", (req, res, next) => {
