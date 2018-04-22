@@ -34,7 +34,7 @@ module.exports = {
     assetsPublicPath: '/',
     souceMap:"cheap-module-eval-source-map",
     proxyTable: {
-      '/api': 'http://localhost:8888/'
+      "/api":"http://localhost:3000/"
     },
     middleWare:function(app){
         app.get("/api",function(req,res,next){

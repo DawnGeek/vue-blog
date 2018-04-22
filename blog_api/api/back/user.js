@@ -1,46 +1,52 @@
 var express = require('express');
 var router = express.Router();
-var hasOwnProperty = require('has-own-property-x');
+var hasOwnProperty = require('has-own-property-x'); //支持hasOwnProperty
 var {
   sqlHandle, //除查询外的其他操作
   readHandle, //读取操作
   searchHandle, //检测有无某条数据，有为false
   searchHandleNormal, //检测有无某条数据，有为true
-  query //基本操作
-} = require("../../config/db_connect");
+  query // //基本操作
+} = require("../../config/db_connect")
 
-router.post('/login', function(req, res, next) {
-  let arg = req.body;
-  if (hasOwnProperty(arg, 'username') && hasOwnProperty(arg, 'password')) {
+/* GET home page. */
+
+router.post('/login', function (req, res, next) {
+  let arg = req.body
+  console.log(arg)
+  if (hasOwnProperty(arg, "username") && hasOwnProperty(arg, "password")) {
     let {
       username,
       password
-    } = arg;
-    const userSql = `select * from user where username='${username}'`;
-    readHandle(userSql).then(data => {
-      if (data.length === 0) {
-        res.send({
-          code: '1001',
-          msg: '未该用户名'
-        });
-      } else {
-        if (data[0].password === password) {
+    } = arg
+    var testUser = `select * from user where name='${username}'`
+    console.log(testUser)
+    readHandle(testUser).then((data) => {
+      console.log(data)
+      if (data.length > 0) {
+        if (data[0].password == password) {
           res.send({
-            code: '1002',
-            msg: '登陆成功！'
-          });
+            code: "1001",
+            msg: "登录成功",
+            data: data[0]
+          })
         } else {
           res.send({
-            code: '1003',
-            msg: '该用户名的密码不正确'
+            code: "1002",
+            msg: "密码错误"
           })
         }
+      } else {
+        res.send({
+          code: "1003",
+          msg: "用户名不存在"
+        })
       }
     })
   } else {
     res.send({
-      code: '1000',
-      msg: '未输入用户名或密码'
+      code: "1000",
+      msg: "未输入用户名或密码"
     })
   }
 });
