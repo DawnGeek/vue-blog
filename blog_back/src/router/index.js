@@ -6,6 +6,9 @@ import Main from '../components/Main'
 import AddOne from '../components/AddOne'
 import AddTwo from '../components/AddTwo'
 import ClassList from '../components/ClassList'
+import AddArticle from '../components/AddArticle'
+import amendOneClass from '../components/amend_one_class'
+import amendTwoClass from '../components/amend_two_class'
 
 vue.use(vueRouter)
 
@@ -31,6 +34,15 @@ let router = new vueRouter({
 			}, {
 				path: 'classlist',
 				component: ClassList
+			}, {
+				path: 'addarticle',
+				component: AddArticle
+			}, {
+				path: 'amend_one_class',
+				component: amendOneClass
+			}, {
+				path: 'amend_two_class',
+				component: amendTwoClass
 			}
 		]
 	}]
