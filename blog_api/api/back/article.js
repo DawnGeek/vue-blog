@@ -21,15 +21,23 @@ router.post("/addarticle", (req, res,next) => {
     recradio,
     takeaway,
     author,
-    content
+    content,
+    data,
+    twoId,
   } = req.body;
-  let addSql = "INSERT INTO `blog`.`article` SET  `author` = '" + author + "', `name` = '" + name + "', `onename` = '" + onename + "', `twoname` = '" + twoname + "', `takeaway` = '" + takeaway + "', `content` = '" + content + "', `disradio` = '" + disradio + "', `recradio` = '" + recradio + "', `data` = '" + data + "'";
-  console.log(addSql)
+
+  // 添加语句
+  let addSql = "INSERT INTO `blog`.`article` SET `id` = '"+Unique()+"', `author` = '" + author + "', `name` = '" + name + "', `onename` = '" + onename + "', `twoname` = '" + twoname + "', `takeaway` = '" + takeaway + "', `content` = '" + content + "', `disradio` = '" + disradio + "', `recradio` = '" + recradio + "', `data` = '" + data + "'";
+  //let newSql = "INSERT INTO `awaw`.`article` SET `id` = '"+Unique()+"', `author` = '" + author + "', `name` = '" + name + "', `onename` = '" + onename + "', `twoname` = '" + twoname + "', `takeaway` = '" + takeaway + "', `content` = '" + content + "', `disradio` = '" + disradio + "', `recradio` = '" + recradio + "', `data` = '" + data + "'";
+  // 二级列表文章数量+1
+  var updateArticalNum = `update two_list set article_num = article_num + 1 where id='${req.body.twoId}'`
+  
   async function sqlAllHandle() {
     await sqlHandle(addSql);
+    await sqlHandle(updateArticalNum);
     return {
       code: "2011",
-      msg: "插入成功"
+      msg: "文章添加成功！"
     }
   }
   sqlAllHandle().then((data) => {
@@ -37,7 +45,7 @@ router.post("/addarticle", (req, res,next) => {
     }).catch((err) => {
       res.send({
         code: "2012",
-        msg: "插入失败"
+        msg: "文章添加失败！"
       })
     })
 });
@@ -62,6 +70,82 @@ router.get("getarticle", (req, res, next) => {
       msg: "获取数据失败"
     })
   })
+})
+
+
+// 修改文章
+router.post('/updateArticle', (req, res, next) => {
+    var sql = `update ${req.body.enname_one} set article_name = '${req.body.article_name}', editer = '${req.body.editer}', content = '${req.body.content}', time = '${req.body.time}', visitors = '${req.body.visitors}', daodu = '${req.body.daodu}', recommend = '${req.body.recommend}', art_show = '${req.body.art_show}' where id = '${req.body.id}'`
+
+    sqlHandle(sql).then((data) => {
+        res.end({
+            code: "3031",
+            msg: "修改成功"
+        })
+    }).catch((err) => {
+        res.send({
+            code: "3032",
+            msg: "修改失败"
+        })
+    })
+})
+
+// 获取所有的文章列表
+router.get("/getArticleList", (req, res, next) => {
+
+    var sqlone = `select * from onelist`
+    var aqltwo = `select * from twolist`
+    // 拼接查询文章的sql
+    const connectSql = (oneClass) => {
+        var selectArtSql = `select * from (`
+        oneClass.forEach(function(i, index) {
+            if (index < (oneClass.length - 1)) {
+                selectArtSql += `select * from ${i.enname} UNION ALL`
+            } else {
+                selectArtSql += `select * from ${i.enname})as tabel_all order by time desc`
+            }
+        }, this)
+        return selectArtSql
+    }
+    // 把一二级类名添加到文章列表
+    const connectArticle = (data) => {
+        const { articleData, oneClass, twoClass } = data
+        return articleData.map(function (i) {
+            oneClass.forEach(function (j) {
+                if(j.id == i.oneId) {
+                    i.enname_one = j.enname
+                    i.cnname_one = j.cnname
+                }
+            })
+            twoClass.forEach(function (j) {
+                if(j.id == i.twoId) {
+                    i.enname_two = j.enname
+                    i.cnname_two = j.cnname
+                }
+            })
+            return i
+        })
+    }
+
+    const asyncGetArticle = async function () {
+        let oneClass = await readHandle(sqlone)
+        let twoClass = await readHandle(sqltwo)
+
+        let articleData = await readHandle(connectSql(oneClass))
+        return connectArtcle({ articleData, oneClass, twoClass })
+    }
+    asyncGetArticle().then((data) => {
+        res.send({
+            code: "3021",
+            msg: "获取成功",
+            data
+        })
+    }).catch((err) => {
+        res.send({
+            code: "3022",
+            msg: "获取失败"
+        })
+    })
 })
 
 module.exports = router;
