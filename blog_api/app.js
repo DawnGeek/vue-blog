@@ -38,6 +38,8 @@ app.use('/api/back/user', apiUser);
 var apiClass = require("./api/back/class.js")
 app.use('/api/back/class', apiClass);
 
+var apiBlog = require('./api/front/blog.js');
+app.use('api/front/blog', apiBlog);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
